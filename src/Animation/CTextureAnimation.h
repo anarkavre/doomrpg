@@ -1,0 +1,35 @@
+#ifndef __CTEXTUREANIMATION_H__
+#define __CTEXTUREANIMATION_H__
+
+#include <string>
+
+class CAnimation;
+class CGame;
+
+class CTextureAnimation
+{
+public:
+	CTextureAnimation() : m_initialized(false) {}
+	CTextureAnimation(const CTextureAnimation &textureAnimation) = default;
+	CTextureAnimation(CTextureAnimation &&textureAnimation) : m_initialized(std::exchange(textureAnimation.m_initialized, false)), m_game(textureAnimation.m_game), m_handle(textureAnimation.m_handle) {}
+	CTextureAnimation(CGame *game, const std::string &name) : m_initialized(false) { Initialize(game, name); }
+	~CTextureAnimation();
+
+	bool Initialize(CGame *game, const std::string &name);
+
+	const CAnimation *GetAnimation() const;
+	std::string GetState() const;
+	void SetState(const std::string &name);
+	unsigned int GetFrame() const;
+	int GetHorizontalOffset() const;
+	int GetVerticalOffset() const;
+
+	bool IsInitialized() const { return m_initialized; }
+
+private:
+	bool m_initialized;
+	CGame *m_game;
+	unsigned int m_handle;
+};
+
+#endif
