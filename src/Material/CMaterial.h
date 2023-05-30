@@ -13,7 +13,7 @@ class CTexture;
 class CMaterial
 {
 public:
-	CMaterial(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : m_game(game), m_handle(handle), m_id(id), m_name(name), m_properties(ECMaterialProperties::None), m_blendMode(ECBlendMode::None) {}
+	CMaterial(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : m_game(game), m_handle(handle), m_id(id), m_name(name) {}
 	~CMaterial();
 
 	unsigned int GetID() const { return m_id; }
@@ -28,14 +28,14 @@ public:
 	void SetBlendMode(ECBlendMode blendMode) { m_blendMode = blendMode; }
 
 private:
-	CGame *m_game;
-	unsigned int m_handle;
-	unsigned int m_id;
+	CGame *m_game{nullptr};
+	unsigned int m_handle{0};
+	unsigned int m_id{0};
 	std::string m_name;
 	std::shared_ptr<CShader> m_shader;
 	std::shared_ptr<CTexture> m_texture;
-	ECMaterialProperties m_properties = ECMaterialProperties::None;
-	ECBlendMode m_blendMode = ECBlendMode::None;
+	ECMaterialProperties m_properties{ECMaterialProperties::None};
+	ECBlendMode m_blendMode{ECBlendMode::None};
 };
 
 #endif

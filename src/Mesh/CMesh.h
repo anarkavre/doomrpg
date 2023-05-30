@@ -15,8 +15,8 @@ class CGame;
 class CMesh : public CObject
 {
 public:
-	CMesh(unsigned int handle, const CMesh &mesh) : CObject(ECObjectType::Mesh), m_initialized(false), m_game(mesh.m_game), m_handle(handle), m_id(mesh.m_id), m_name(mesh.m_name) { Initialize(mesh.m_geometry, mesh.m_material, mesh.m_instanced, mesh.m_billboard); }
-	CMesh(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : CObject(ECObjectType::Mesh), m_initialized(false), m_game(game), m_handle(handle), m_id(id), m_name(name), m_instanced(false), m_billboard(false) {}
+	CMesh(unsigned int handle, const CMesh &mesh) : CObject(ECObjectType::Mesh), m_game(mesh.m_game), m_handle(handle), m_id(mesh.m_id), m_name(mesh.m_name) { Initialize(mesh.m_geometry, mesh.m_material, mesh.m_instanced, mesh.m_billboard); }
+	CMesh(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : CObject(ECObjectType::Mesh), m_game(game), m_handle(handle), m_id(id), m_name(name) {}
 	~CMesh();
 
 	bool Initialize(std::shared_ptr<CGeometry> geometry, std::shared_ptr<CMaterial> material, bool instanced, bool billboard);
@@ -33,17 +33,17 @@ public:
 	bool IsBillboard() const { return m_billboard; }
 
 protected:
-	bool m_initialized;
-	CGame *m_game;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
 
 private:
-	unsigned int m_handle;
-	unsigned int m_id;
+	unsigned int m_handle{0};
+	unsigned int m_id{0};
 	std::string m_name;
 	std::shared_ptr<CGeometry> m_geometry;
 	std::shared_ptr<CMaterial> m_material;
-	bool m_instanced;
-	bool m_billboard;
+	bool m_instanced{false};
+	bool m_billboard{false};
 };
 
 #endif

@@ -42,8 +42,8 @@ struct OpenGLIndexBufferData
 class COpenGLRenderer : public IRenderer
 {
 public:
-	COpenGLRenderer() : IRenderer(ECRendererType::OpenGL, "OpenGL"), m_initialized(false) {}
-	COpenGLRenderer(CGame *game, CWindow *window) : IRenderer(ECRendererType::OpenGL, "OpenGL"), m_initialized(false) { Initialize(game, window); }
+	COpenGLRenderer() : IRenderer(ECRendererType::OpenGL, "OpenGL") {}
+	COpenGLRenderer(CGame *game, CWindow *window) : IRenderer(ECRendererType::OpenGL, "OpenGL") { Initialize(game, window); }
 	~COpenGLRenderer();
 
 	bool Initialize(CGame *game, CWindow *window);
@@ -109,10 +109,10 @@ private:
 	GLint CompileShader(GLenum type, const std::string &source, GLuint &shader, unsigned int &errorCode, std::string &errorMessage);
 	GLint LinkProgram(GLuint vertexShader, GLuint fragmentShader, GLuint &program, unsigned int &errorCode, std::string &errorMessage);
 
-	bool m_initialized;
-	CGame *m_game;
-	SDL_Window *m_window;
-	SDL_GLContext m_GLContext;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
+	SDL_Window *m_window{nullptr};
+	SDL_GLContext m_GLContext{nullptr};
 	CPool<OpenGLShaderData> m_shaderPool;
 	CPool<OpenGLTextureData> m_texturePool;
 	CPool<OpenGLVertexBufferData> m_vertexBufferPool;

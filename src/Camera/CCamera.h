@@ -10,8 +10,8 @@ class CGame;
 class CCamera : public CObject
 {
 public:
-	CCamera() : CObject(ECObjectType::Camera), m_initialized(false) {}
-	CCamera(CGame *game, float hfov, float aspect, float near, float far, const glm::vec3 &position, const glm::vec3 &rotation, float speed, float angularSpeed) : CObject(ECObjectType::Camera), m_initialized(false) { Initialize(game, hfov, aspect, near, far, position, rotation, speed, angularSpeed); }
+	CCamera() : CObject(ECObjectType::Camera) {}
+	CCamera(CGame *game, float hfov, float aspect, float near, float far, const glm::vec3 &position, const glm::vec3 &rotation, float speed, float angularSpeed) : CObject(ECObjectType::Camera) { Initialize(game, hfov, aspect, near, far, position, rotation, speed, angularSpeed); }
 	~CCamera();
 
 	bool Initialize(CGame *game, float hfov, float aspect, float near, float far, const glm::vec3 &position, const glm::vec3 &rotation, float speed, float angularSpeed);
@@ -56,20 +56,20 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 protected:
-	CGame *m_game;
-	float m_hfov, m_vfov;
-	float m_aspect;
-	float m_near, m_far;
-	float m_speed, m_angularSpeed;
-	bool m_updatePerspectiveMatrix, m_updateViewMatrix;
+	CGame *m_game{nullptr};
+	float m_hfov{0.0f}, m_vfov{0.0f};
+	float m_aspect{0.0f};
+	float m_near{0.0f}, m_far{0.0f};
+	float m_speed{0.0f}, m_angularSpeed{0.0f};
+	bool m_updatePerspectiveMatrix{false}, m_updateViewMatrix{false};
 
 private:
 	glm::vec4 ComputePlane(const glm::vec4 &coefficients) { return glm::vec4(coefficients) / glm::length(glm::vec3(coefficients)); }
 
-	bool m_initialized;
-	glm::mat4 m_perspectiveMatrix, m_viewMatrix;
-	glm::vec4 m_planes[6];
-	bool m_updatePlanes;
+	bool m_initialized{false};
+	glm::mat4 m_perspectiveMatrix{0.0f}, m_viewMatrix{0.0f};
+	glm::vec4 m_planes[6]{glm::vec4{0.0f}};
+	bool m_updatePlanes{false};
 };
 
 #endif

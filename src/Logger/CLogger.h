@@ -9,8 +9,8 @@ class CGame;
 class CLogger
 {
 public:
-	CLogger() : m_initialized(false) {}
-	CLogger(CGame *game, const std::string &name) : m_initialized(false) { Initialize(game, name); }
+	CLogger() {}
+	CLogger(CGame *game, const std::string &name) { Initialize(game, name); }
 	~CLogger();
 
 	bool Initialize(CGame *game, const std::string &name);
@@ -21,7 +21,7 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
+	bool m_initialized{false};
 	std::string m_name;
 	std::ofstream m_ofstream;
 };

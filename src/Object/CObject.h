@@ -19,7 +19,7 @@ enum class ECObjectType
 class CObject : public IUpdateHandler
 {
 public:
-	CObject(ECObjectType type = ECObjectType::Object) : m_type(type), m_position(glm::vec3(0.0f)), m_rotation(glm::vec3(0.0f)), m_oldPosition(glm::vec3(0.0f)), m_oldRotation(glm::vec3(0.0f)), m_scale(glm::vec3(1.0f)), m_offset(glm::vec3(0.0f)), m_updateTransformationMatrix(true), m_collisionHandler(nullptr), m_parent(nullptr), m_target(nullptr), m_hidden(false) { UpdateTransformationMatrix(); }
+	CObject(ECObjectType type = ECObjectType::Object) : m_type(type) { UpdateTransformationMatrix(); }
 
 	bool Update(float elapsedTime);
 	void UpdateTransformationMatrix();
@@ -101,19 +101,19 @@ protected:
 
 private:
 	std::string m_name;
-	ECObjectType m_type;
-	glm::vec3 m_position, m_oldPosition;
-	glm::vec3 m_rotation, m_oldRotation;
-	glm::vec3 m_scale;
-	glm::vec3 m_offset;
-	glm::vec3 m_upVector, m_forwardVector, m_rightVector;
-	glm::mat4 m_translationMatrix, m_rotationMatrix, m_scalingMatrix, m_offsetMatrix, m_transformationMatrix;
-	bool m_updateTransformationMatrix;
-	ICollisionHandler *m_collisionHandler;
-	CObject *m_parent;
+	ECObjectType m_type{ECObjectType::Object};
+	glm::vec3 m_position{0.0f}, m_oldPosition{0.0f};
+	glm::vec3 m_rotation{0.0f}, m_oldRotation{0.0f};
+	glm::vec3 m_scale{1.0f};
+	glm::vec3 m_offset{0.0f};
+	glm::vec3 m_upVector{0.0f}, m_forwardVector{0.0f}, m_rightVector{0.0f};
+	glm::mat4 m_translationMatrix{0.0f}, m_rotationMatrix{0.0f}, m_scalingMatrix{0.0f}, m_offsetMatrix{0.0f}, m_transformationMatrix{0.0f};
+	bool m_updateTransformationMatrix{true};
+	ICollisionHandler *m_collisionHandler{nullptr};
+	CObject *m_parent{nullptr};
 	std::shared_ptr<CObject> m_child;
-	CObject *m_target;
-	bool m_hidden;
+	CObject *m_target{nullptr};
+	bool m_hidden{false};
 };
 
 #endif

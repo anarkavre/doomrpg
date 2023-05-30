@@ -73,7 +73,7 @@ struct ConsoleVertexData;
 class CRenderSystem : public ISystem, public IRenderHandler
 {
 public:
-	CRenderSystem(CGame *game = nullptr) : m_uiElementVertexBuffer(nullptr), m_textVertexBuffer(nullptr), m_consoleVertexBuffer(nullptr) { Initialize(game); }
+	CRenderSystem(CGame *game = nullptr) { Initialize(game); }
 	~CRenderSystem();
 
 	bool Initialize(CGame *game);
@@ -117,19 +117,19 @@ private:
 	SceneEntityBatch &FindSceneEntityBatch(std::list<SceneEntityBatch> &sceneEntityBatches, std::shared_ptr<CMaterial> material, bool instanced);
 	void UpdateConsoleRows(ConsoleVertexData *pVertices, unsigned int startRow, unsigned int endRow = 0);
 
-	IRenderer *m_renderer;
-	bool m_updateTextureFilter, m_updateScene, m_updateUI, m_updateText, m_updateConsole;
-	ECTextureFilter m_textureFilter;
+	IRenderer *m_renderer{nullptr};
+	bool m_updateTextureFilter{false}, m_updateScene{false}, m_updateUI{false}, m_updateText{false}, m_updateConsole{false};
+	ECTextureFilter m_textureFilter{ECTextureFilter::Point};
 	std::list<CTexture *> m_textures;
 	std::list<std::pair<CVertexBuffer *, std::list<SceneEntityBatch>>> m_sceneEntityBatches;
 	std::unordered_map<unsigned int, std::pair<unsigned int, unsigned int>> m_sceneEntityMeshLookup;
 	std::shared_ptr<CShader> m_uiElementShader, m_textShader, m_consoleShader;
-	CVertexBuffer *m_uiElementVertexBuffer, *m_textVertexBuffer, *m_consoleVertexBuffer;
+	CVertexBuffer *m_uiElementVertexBuffer{nullptr}, *m_textVertexBuffer{nullptr}, * m_consoleVertexBuffer{nullptr};
 	std::unordered_map<std::shared_ptr<CFont>, std::list<DynamicTextBatch>::iterator> m_dynamicTextBatchLookup;
 	std::list<UIElementBatch> m_uiElementBatches;
 	std::list<DynamicTextBatch> m_dynamicTextBatches;
-	glm::mat4 m_consoleTranslationMatrix, m_cursorTranslationMatrix;
-	unsigned int m_count, m_size, m_vertexCount;
+	glm::mat4 m_consoleTranslationMatrix{0.0f}, m_cursorTranslationMatrix{0.0f};
+	unsigned int m_count{0}, m_size{0}, m_vertexCount{0};
 	ConsoleData m_consoleData;
 };
 

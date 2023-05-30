@@ -9,8 +9,8 @@ class CInputAction;
 class CTurnBasedCamera : public CCamera, public IEventHandler
 {
 public:
-	CTurnBasedCamera() : m_locked(false), m_moving(false), m_turning(false), m_time(0.0f) {}
-	CTurnBasedCamera(CGame *game, float hfov, float aspect, float near, float far, const glm::vec3 &position, const glm::vec3 &rotation, float speed, float angularSpeed) : m_locked(false), m_moving(false), m_turning(false), m_time(0.0f) { Initialize(game, hfov, aspect, near, far, position, rotation, speed, angularSpeed); }
+	CTurnBasedCamera() {}
+	CTurnBasedCamera(CGame *game, float hfov, float aspect, float near, float far, const glm::vec3 &position, const glm::vec3 &rotation, float speed, float angularSpeed) { Initialize(game, hfov, aspect, near, far, position, rotation, speed, angularSpeed); }
 	~CTurnBasedCamera();
 
 	bool Initialize(CGame *game, float hfov, float aspect, float near, float far, const glm::vec3 &position, const glm::vec3 &rotation, float speed, float angularSpeed);
@@ -25,12 +25,12 @@ public:
 	bool IsTurning() const { return m_turning; }
 
 private:
-	CInputAction *m_actions[6];
-	glm::vec3 m_directionVector;
-	float m_turnDirection;
-	bool m_locked;
-	bool m_moving, m_turning;
-	float m_time;
+	CInputAction *m_actions[6]{nullptr};
+	glm::vec3 m_directionVector{0.0f};
+	float m_turnDirection{0.0f};
+	bool m_locked{false};
+	bool m_moving{false}, m_turning{false};
+	float m_time{0.0f};
 };
 
 #endif

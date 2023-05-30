@@ -12,7 +12,7 @@ class CGame;
 class CMaterialManager
 {
 public:
-	CMaterialManager(CGame *game = nullptr) : m_initialized(false) { Initialize(game); }
+	CMaterialManager(CGame *game = nullptr) { Initialize(game); }
 
 	bool Initialize(CGame *game);
 
@@ -23,8 +23,8 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
 	CPool<std::weak_ptr<CMaterial>> m_materialPool;
 };
 #endif

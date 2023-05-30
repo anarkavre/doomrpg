@@ -30,8 +30,8 @@ public:
 	static const std::string &GetResourcePath() { return m_resourcePath; }
 
 private:
-	IRenderer *m_renderer;
-	unsigned int m_handle;
+	IRenderer *m_renderer{nullptr};
+	unsigned int m_handle{0};
 	std::unordered_map<std::string, unsigned int> m_attributeLocations, m_uniformLocations;
 
 	static const std::string m_resourcePath;

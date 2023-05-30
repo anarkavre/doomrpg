@@ -55,13 +55,13 @@ private:
 	std::unordered_multimap<unsigned int, unsigned int> m_thingLocations;
 	std::vector<CEntity *> m_entities;
 	std::vector<CThing *> m_things;
-	glm::vec3 m_playerPosition;
-	float m_playerAngle;
-	unsigned char m_blockMap[32][32];
+	glm::vec3 m_playerPosition{0.0f};
+	float m_playerAngle{0.0f};
+	unsigned char m_blockMap[32][32]{0};
 	std::unordered_map<unsigned int, Event> m_events;
-	bspmap_t *m_map;
-	bspmapex_t *m_mapex;
-	strings_t *m_strings;
+	bspmap_t *m_map{nullptr};
+	bspmapex_t *m_mapex{nullptr};
+	strings_t *m_strings{nullptr};
 
 	static const std::string m_resourcePath;
 };

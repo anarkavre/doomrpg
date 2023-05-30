@@ -15,7 +15,7 @@ static bool ends_with(const std::string &value, const std::string &ending)
 	return equal(ending.rbegin(), ending.rend(), value.rbegin(), [](const char a, const char b) { return (tolower(a) == tolower(b)); });
 }
 
-CTexture::CTexture(CGame *game, unsigned int handle, const std::string &name) : CResource(game, handle, name, GetResourcePath(), ECResourceType::Texture), m_renderer(game->GetRenderer()), m_hasMipmaps(false)
+CTexture::CTexture(CGame *game, unsigned int handle, const std::string &name) : CResource(game, handle, name, GetResourcePath(), ECResourceType::Texture), m_renderer(game->GetRenderer())
 {
 	unsigned char *data = new unsigned char[GetSize()];
 	GetData(data, GetSize());

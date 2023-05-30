@@ -38,12 +38,12 @@ public:
 private:
 	void ToggleMesh();
 
-	bool m_open;
-	ECDoorState m_state;
-	unsigned int m_openDelayTics;
-	unsigned int m_closeDelayTics;
-	unsigned int m_tics;
-	float m_speed;
+	bool m_open{false};
+	ECDoorState m_state{ECDoorState::Closed};
+	unsigned int m_openDelayTics{0};
+	unsigned int m_closeDelayTics{0};
+	unsigned int m_tics{0};
+	float m_speed{2.0f};
 	std::shared_ptr<CMesh> m_mesh[2];
 	std::shared_ptr<CSound> m_sound[2];
 };

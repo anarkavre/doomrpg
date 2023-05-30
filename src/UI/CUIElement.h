@@ -14,11 +14,11 @@ class CUIElementStateful;
 class CUIElement
 {
 public:
-	CUIElement() : m_initialized(false) {}
+	CUIElement() {}
 	CUIElement(const CUIElement &uiElement) = default;
-	CUIElement(CUIElement &&uiElement) : m_initialized(std::exchange(uiElement.m_initialized, false)), m_game(std::exchange(uiElement.m_game, nullptr)), m_handle(std::exchange(uiElement.m_handle, UINT_MAX)), m_children(std::move(uiElement.m_children)) {}
-	CUIElement(CGame *game, const UIElementRect &rect, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None, bool hidden = false) : m_initialized(false) { Initialize(game, rect, texture, properties, hidden); }
-	CUIElement(CGame *game, ECUIElementHorizontalAlignment xAlignment, ECUIElementVerticalAlignment yAlignment, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None, bool hidden = false) : m_initialized(false) { Initialize(game, xAlignment, yAlignment, texture, properties, hidden); }
+	CUIElement(CUIElement &&uiElement) noexcept : m_initialized(std::exchange(uiElement.m_initialized, false)), m_game(std::exchange(uiElement.m_game, nullptr)), m_handle(std::exchange(uiElement.m_handle, UINT_MAX)), m_children(std::move(uiElement.m_children)) {}
+	CUIElement(CGame *game, const UIElementRect &rect, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None, bool hidden = false) { Initialize(game, rect, texture, properties, hidden); }
+	CUIElement(CGame *game, ECUIElementHorizontalAlignment xAlignment, ECUIElementVerticalAlignment yAlignment, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None, bool hidden = false) { Initialize(game, xAlignment, yAlignment, texture, properties, hidden); }
 	CUIElement(CGame *game, const CUIElement *parent, const UIElementRect &rect, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None, bool hidden = false);
 	CUIElement(CGame *game, const CUIElement *parent, ECUIElementHorizontalAlignment xAlignment, ECUIElementVerticalAlignment yAlignment, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None, bool hidden = false);
 	~CUIElement();
@@ -37,9 +37,9 @@ public:
 	bool IsHidden() const { return GetHidden(); }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
-	unsigned int m_handle;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
+	unsigned int m_handle{0};
 	std::list<CUIElement> m_children;
 	std::list<CUIElementStateful> m_statefulChildren;
 };

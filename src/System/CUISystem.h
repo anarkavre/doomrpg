@@ -54,9 +54,9 @@ private:
 
 	CPool<UIElementData> m_uiElementPool;
 	std::list<unsigned int> m_uiElementHandles;
-	bool m_buildUIElements;
-	bool m_displayFPS;
-	int m_scale;
+	bool m_buildUIElements{false};
+	bool m_displayFPS{false};
+	int m_scale{1};
 };
 
 #endif

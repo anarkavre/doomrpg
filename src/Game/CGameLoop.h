@@ -16,7 +16,7 @@ class CGame;
 class CGameLoop
 {
 public:
-	CGameLoop(CGame *game = nullptr) : m_running(false), m_updateRate(100), m_frameRate(0), m_updateInterval(0.01f), m_accumulator(0.0f) { Initialize(game); }
+	CGameLoop(CGame *game = nullptr) { Initialize(game); }
 
 	bool Initialize(CGame *game);
 	void Run();
@@ -48,18 +48,18 @@ public:
 	bool IsRunning() const { return m_running; }
 
 private:
-	bool m_initialized;
-	bool m_running;
-	unsigned int m_updateRate;
-	unsigned int m_frameRate;
+	bool m_initialized{false};
+	bool m_running{false};
+	unsigned int m_updateRate{100};
+	unsigned int m_frameRate{0};
 	CTimer m_timer;
 	std::unordered_map<Uint32, std::list<IEventHandler *>> m_eventHandlers;
 	std::list<IUpdateHandler *> m_updateHandlers;
 	std::list<ISystem *> m_systems;
 	std::list<IRenderHandler *> m_renderHandlers;
 	std::list<IPresentHandler *> m_presentHandlers;
-	float m_updateInterval;
-	float m_accumulator;
+	float m_updateInterval{0.01f};
+	float m_accumulator{0.0f};
 };
 
 #endif

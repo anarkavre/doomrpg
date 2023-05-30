@@ -6,7 +6,7 @@ class CGame;
 class CGameState
 {
 public:
-	CGameState(CGame *game = nullptr) : m_initialized(false) { Initialize(game); }
+	CGameState(CGame *game = nullptr) { Initialize(game); }
 
 	virtual bool Initialize(CGame *game) { m_game = game; return (m_game != nullptr); }
 	virtual void Update() {}
@@ -14,8 +14,8 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 protected:
-	bool m_initialized;
-	CGame *m_game;
+	bool m_initialized{false};
+	CGame *m_game{false};
 };
 
 #endif

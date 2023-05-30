@@ -17,7 +17,7 @@ static bool ends_with(const std::string &value, const std::string &ending)
 	return equal(ending.rbegin(), ending.rend(), value.rbegin(), [](const char a, const char b) { return (tolower(a) == tolower(b)); });
 }
 
-CFont::CFont(CGame *game, unsigned int handle, const std::string &name) : CResource(game, handle, name, GetResourcePath(), ECResourceType::Font), m_fgColor({ 255, 255, 255, 255 }), m_bgColor({ 0, 0, 0, 0 })
+CFont::CFont(CGame *game, unsigned int handle, const std::string &name) : CResource(game, handle, name, GetResourcePath(), ECResourceType::Font)
 {
 	CConsole &console = m_game->GetConsole();
 

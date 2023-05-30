@@ -15,7 +15,7 @@ class CWeapon;
 class CPlayer : public CObject
 {
 public:
-	CPlayer(CDoomRPG *doomrpg = nullptr) : m_initialized(false), m_attacking(false), m_health(0), m_maxHealth(0), m_armor(0), m_maxArmor(0), m_credits(0), m_maxCredits(0), m_ammo{ 0 }, m_smallMedkits(0), m_largeMedkits(0), m_soulSpheres(0), m_berserkers(0), m_dogCollars(0), m_keys{ nullptr }, m_weapons{ nullptr } { Initialize(doomrpg); }
+	CPlayer(CDoomRPG *doomrpg = nullptr) { Initialize(doomrpg); }
 	~CPlayer();
 
 	bool Initialize(CDoomRPG *doomrpg);
@@ -59,26 +59,26 @@ public:
 	bool IsAttacking() const { return m_attacking; }
 
 private:
-	bool m_initialized;
-	CDoomRPG *m_doomrpg;
+	bool m_initialized{false};
+	CDoomRPG *m_doomrpg{nullptr};
 	CTurnBasedCamera m_camera;
-	bool m_attacking;
-	unsigned int m_health, m_maxHealth;
-	unsigned int m_armor, m_maxArmor;
-	unsigned int m_credits, m_maxCredits;
-	unsigned int m_ammo[5];
-	unsigned int m_smallMedkits;
-	unsigned int m_largeMedkits;
-	unsigned int m_soulSpheres;
-	unsigned int m_berserkers;
-	unsigned int m_dogCollars;
-	CKey *m_keys[4];
-	CWeapon *m_weapons[12];
-	unsigned int m_currentWeapon;
-	CInputAction *m_action, *m_weaponAction[9];
+	bool m_attacking{false};
+	unsigned int m_health{0}, m_maxHealth{0};
+	unsigned int m_armor{0}, m_maxArmor{0};
+	unsigned int m_credits{0}, m_maxCredits{0};
+	unsigned int m_ammo[5]{0};
+	unsigned int m_smallMedkits{0};
+	unsigned int m_largeMedkits{0};
+	unsigned int m_soulSpheres{0};
+	unsigned int m_berserkers{0};
+	unsigned int m_dogCollars{0};
+	CKey *m_keys[4]{nullptr};
+	CWeapon *m_weapons[12]{nullptr};
+	unsigned int m_currentWeapon{0};
+	CInputAction *m_action{nullptr}, *m_weaponAction[9]{nullptr};
 	std::shared_ptr<CAnimatedMeshStateful> m_weaponsMesh;
 	CCollisionHandler m_collisionHandler;
-	CWeapon *m_pistol;
+	CWeapon *m_pistol{nullptr};
 	std::shared_ptr<CSound> m_itemPickup;
 	std::shared_ptr<CSound> m_weaponPickup;
 	std::shared_ptr<CSound> m_powerupPickup;

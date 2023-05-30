@@ -14,7 +14,7 @@ class CInputAction;
 class CDialog : public IUpdateHandler
 {
 public:
-	CDialog(CDoomRPG *doomrpg = nullptr) : m_initialized(false), m_hidden(true) { Initialize(doomrpg); }
+	CDialog(CDoomRPG *doomrpg = nullptr) { Initialize(doomrpg); }
 	~CDialog();
 
 	bool Initialize(CDoomRPG *doomrpg);
@@ -39,19 +39,19 @@ public:
 private:
 	void ParseLines();
 
-	bool m_initialized;
-	CDoomRPG *m_doomrpg;
+	bool m_initialized{false};
+	CDoomRPG *m_doomrpg{nullptr};
 	CUIElement m_dialog;
-	CInputAction *m_actions[3];
+	CInputAction *m_actions[3]{nullptr};
 	std::string m_message;
-	bool m_hidden;
-	bool m_locked;
-	bool m_canceled;
+	bool m_hidden{true};
+	bool m_locked{false};
+	bool m_canceled{false};
 	std::vector<std::string> m_lines;
-	unsigned int m_start, m_end;
-	unsigned int m_index;
-	unsigned int m_printTics, m_printTicCount;
-	bool m_printing;
+	unsigned int m_start{0}, m_end{0};
+	unsigned int m_index{0};
+	unsigned int m_printTics{0}, m_printTicCount{0};
+	bool m_printing{false};
 };
 
 #endif

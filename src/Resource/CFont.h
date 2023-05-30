@@ -34,16 +34,16 @@ public:
 	static const std::string &GetResourcePath() { return m_resourcePath; }
 
 private:
-	unsigned int m_fontWidth, m_fontHeight;
-	unsigned int m_cellWidth, m_cellHeight;
-	unsigned int m_rowPitch;
-	float m_columnFactor;
-	float m_rowFactor;
-	unsigned char m_bpp;
-	char m_base;
-	unsigned char m_widthData[256];
+	unsigned int m_fontWidth{0}, m_fontHeight{0};
+	unsigned int m_cellWidth{0}, m_cellHeight{0};
+	unsigned int m_rowPitch{0};
+	float m_columnFactor{0.0f};
+	float m_rowFactor{0.0f};
+	unsigned char m_bpp{0};
+	char m_base{0};
+	unsigned char m_widthData[256]{0};
 	std::shared_ptr<CTexture> m_texture;
-	glm::uvec4 m_fgColor, m_bgColor;
+	glm::uvec4 m_fgColor{255, 255, 255, 255}, m_bgColor{0, 0, 0, 0};
 
 	static const std::string m_resourcePath;
 };

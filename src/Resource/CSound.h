@@ -16,7 +16,7 @@ public:
 	static const std::string &GetResourcePath() { return m_resourcePath; }
 
 private:
-	Mix_Chunk *m_chunk;
+	Mix_Chunk *m_chunk{nullptr};
 
 	static const std::string m_resourcePath;
 };

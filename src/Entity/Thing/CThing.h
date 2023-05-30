@@ -20,7 +20,7 @@ public:
 	void SetHidden(bool hidden);
 
 private:
-	unsigned int m_state;
+	unsigned int m_state{0};
 	std::shared_ptr<CMesh> m_mesh;
 };
 

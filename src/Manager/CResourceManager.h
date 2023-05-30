@@ -12,7 +12,7 @@ class CGame;
 class CResourceManager
 {
 public:
-	CResourceManager(CGame *game = nullptr) : m_initialized(false), m_basePath("data/") { Initialize(game); }
+	CResourceManager(CGame *game = nullptr) { Initialize(game); }
 
 	bool Initialize(CGame *game);
 
@@ -27,9 +27,9 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
-	std::string m_basePath;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
+	std::string m_basePath{"data/"};
 	CPool<std::weak_ptr<CResource>> m_resourcePool;
 };
 

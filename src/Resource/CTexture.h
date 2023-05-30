@@ -31,12 +31,12 @@ private:
 	void SetFilterMode();
 	void SetWrapMode();
 
-	IRenderer *m_renderer;
-	unsigned int m_handle;
-	unsigned int m_width, m_height;
-	ECTextureFilter m_filter;
-	ECTextureWrap m_wrap[2];
-	bool m_hasMipmaps;
+	IRenderer *m_renderer{nullptr};
+	unsigned int m_handle{0};
+	unsigned int m_width{0}, m_height{0};
+	ECTextureFilter m_filter{ECTextureFilter::Point};
+	ECTextureWrap m_wrap[2]{ECTextureWrap::Clamp};
+	bool m_hasMipmaps{false};
 
 	static const std::string m_resourcePath;
 };

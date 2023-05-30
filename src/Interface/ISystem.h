@@ -6,7 +6,7 @@ class CGame;
 class ISystem
 {
 public:
-	ISystem() : m_initialized(false), m_game(nullptr) {}
+	ISystem() {}
 	virtual ~ISystem() {}
 
 	virtual bool Initialize(CGame *game) { m_game = game; return (m_game != nullptr); }
@@ -15,8 +15,8 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 protected:
-	bool m_initialized;
-	CGame *m_game;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
 };
 
 #endif

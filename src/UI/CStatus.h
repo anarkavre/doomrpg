@@ -14,7 +14,7 @@ class CFont;
 class CStatus : public IUpdateHandler
 {
 public:
-	CStatus(CDoomRPG *doomrpg = nullptr) : m_initialized(false), m_hidden(false) { Initialize(doomrpg); }
+	CStatus(CDoomRPG *doomrpg = nullptr) { Initialize(doomrpg); }
 	~CStatus();
 
 	bool Initialize(CDoomRPG *doomrpg);
@@ -41,24 +41,24 @@ private:
 	void ShowHUD();
 	void HideHUD();
 
-	bool m_initialized;
-	CDoomRPG *m_doomrpg;
+	bool m_initialized{false};
+	CDoomRPG *m_doomrpg{nullptr};
 	CUIElement m_statusBar;
 	CUIElement m_hudBars[2];
-	CUIElement *m_huds[2];
-	CUIElementStateful *m_faces[2];
-	CUIElement *m_healthIcons[2];
-	CUIElement *m_armorIcons[2];
-	CUIElementStateful *m_weaponIcons[2];
-	CUIElement *m_directionIcons[2];
+	CUIElement *m_huds[2]{nullptr};
+	CUIElementStateful *m_faces[2]{nullptr};
+	CUIElement *m_healthIcons[2]{nullptr};
+	CUIElement *m_armorIcons[2]{nullptr};
+	CUIElementStateful *m_weaponIcons[2]{nullptr};
+	CUIElement *m_directionIcons[2]{nullptr};
 	std::shared_ptr<CFont> m_largeFont;
 	std::queue<std::string> m_messages;
 	std::string m_message;
-	unsigned int m_displayTics, m_displayTicCount;
-	bool m_hidden;
-	unsigned int m_currentFace, m_lastFace;
-	unsigned int m_currentWeaponIcon, m_lastWeaponIcon;
-	unsigned int m_currentHud;
+	unsigned int m_displayTics{0}, m_displayTicCount{0};
+	bool m_hidden{false};
+	unsigned int m_currentFace{0}, m_lastFace{0};
+	unsigned int m_currentWeaponIcon{0}, m_lastWeaponIcon{0};
+	unsigned int m_currentHud{0};
 };
 
 #endif

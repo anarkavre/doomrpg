@@ -6,6 +6,7 @@
 
 enum class ECConsoleVariableType
 {
+	Undefined,
 	Bool,
 	Float,
 	Int,
@@ -39,7 +40,7 @@ public:
 private:
 	void ProcessValue();
 
-	ECConsoleVariableType m_type;
+	ECConsoleVariableType m_type{ECConsoleVariableType::Undefined};
 	std::string m_name;
 	std::string m_value;
 	std::function<void (CConsoleVariable &)> m_func;

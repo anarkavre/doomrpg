@@ -13,7 +13,7 @@ class CUIElement;
 class CUIElementStateful
 {
 public:
-	CUIElementStateful(CGame *game, const CUIElement *parent) : m_game(game), m_parent(parent), m_state(0) {}
+	CUIElementStateful(CGame *game, const CUIElement *parent) : m_game(game), m_parent(parent) {}
 	~CUIElementStateful() {}
 
 	CUIElement &AddState(const UIElementRect &rect, const UIElementTexture &texture, ECUIElementProperties properties = ECUIElementProperties::None);
@@ -27,10 +27,10 @@ public:
 	bool IsHidden() const { return GetHidden(); }
 
 private:
-	CGame *m_game;
-	const CUIElement *m_parent;
+	CGame *m_game{nullptr};
+	const CUIElement *m_parent{nullptr};
 	std::vector<CUIElement> m_states;
-	unsigned int m_state;
+	unsigned int m_state{0};
 };
 
 #endif

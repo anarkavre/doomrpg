@@ -132,15 +132,15 @@ public:
 protected:
 	ECRendererType m_type;
 	std::string m_name;
-	glm::mat4 m_projectionMatrix, m_orthoMatrix, m_viewMatrix;
-	bool m_depthTest;
-	bool m_cullFace;
-	bool m_blend;
-	ECBlendMode m_blendMode;
-	bool m_vsync;
-	int m_viewport[4];
-	glm::vec4 m_clearColor;
-	float m_clearDepth;
+	glm::mat4 m_projectionMatrix{0.0f}, m_orthoMatrix{0.0f}, m_viewMatrix{0.0f};
+	bool m_depthTest{false};
+	bool m_cullFace{false};
+	bool m_blend{false};
+	ECBlendMode m_blendMode{ECBlendMode::None};
+	bool m_vsync{false};
+	int m_viewport[4]{0};
+	glm::vec4 m_clearColor{0.0f, 0.0f, 0.0f, 1.0f};
+	float m_clearDepth{1.0f};
 };
 
 #endif

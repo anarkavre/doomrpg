@@ -1,14 +1,14 @@
 #include "CUIElement.h"
 #include "Game/CGame.h"
 
-CUIElement::CUIElement(CGame *game, const CUIElement *parent, const UIElementRect &rect, const UIElementTexture &texture, ECUIElementProperties properties, bool hidden) : m_initialized(false), m_game(game)
+CUIElement::CUIElement(CGame *game, const CUIElement *parent, const UIElementRect &rect, const UIElementTexture &texture, ECUIElementProperties properties, bool hidden) : m_game(game)
 {
 	m_game->GetUISystem().CreateUIElement(parent->m_handle, rect, texture, properties, hidden, m_handle);
 
 	m_initialized = true;
 }
 
-CUIElement::CUIElement(CGame *game, const CUIElement *parent, ECUIElementHorizontalAlignment xAlignment, ECUIElementVerticalAlignment yAlignment, const UIElementTexture &texture, ECUIElementProperties properties, bool hidden) : m_initialized(false), m_game(game)
+CUIElement::CUIElement(CGame *game, const CUIElement *parent, ECUIElementHorizontalAlignment xAlignment, ECUIElementVerticalAlignment yAlignment, const UIElementTexture &texture, ECUIElementProperties properties, bool hidden) : m_game(game)
 {
 	m_game->GetUISystem().CreateUIElement(parent->m_handle, xAlignment, yAlignment, texture, properties, hidden, m_handle);
 

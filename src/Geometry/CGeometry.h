@@ -11,7 +11,7 @@ class CGame;
 class CGeometry
 {
 public:
-	CGeometry(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : m_game(game), m_handle(handle), m_id(id), m_name(name), m_vertexCount(0) {}
+	CGeometry(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : m_game(game), m_handle(handle), m_id(id), m_name(name) {}
 	~CGeometry();
 
 	unsigned int GetID() const { return m_id; }
@@ -25,12 +25,12 @@ protected:
 	std::vector<ECVertexComponent> m_vertexComponents;
 	std::vector<float> m_vertexData;
 	std::vector<unsigned int> m_indexData;
-	unsigned int m_vertexCount;
+	unsigned int m_vertexCount{0};
 
 private:
-	CGame *m_game;
-	unsigned int m_handle;
-	unsigned int m_id;
+	CGame *m_game{nullptr};
+	unsigned int m_handle{0};
+	unsigned int m_id{0};
 	std::string m_name;
 };
 

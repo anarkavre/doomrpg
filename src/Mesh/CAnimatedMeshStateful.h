@@ -12,8 +12,8 @@ struct AnimatedMeshStatefulData
 class CAnimatedMeshStateful : public CMesh
 {
 public:
-	CAnimatedMeshStateful(unsigned int handle, const CAnimatedMeshStateful &animatedMeshStateful) : CMesh(handle, animatedMeshStateful), m_data(animatedMeshStateful.m_data), m_state(0) {}
-	CAnimatedMeshStateful(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : CMesh(game, handle, id, name), m_state(0) {}
+	CAnimatedMeshStateful(unsigned int handle, const CAnimatedMeshStateful &animatedMeshStateful) : CMesh(handle, animatedMeshStateful), m_data(animatedMeshStateful.m_data) {}
+	CAnimatedMeshStateful(CGame *game, unsigned int handle, unsigned int id, const std::string &name) : CMesh(game, handle, id, name) {}
 
 	bool Initialize(std::shared_ptr<CGeometry> geometry, std::shared_ptr<CMaterial> material, bool instanced = false, bool billboard = false);
 	void AddState(const std::string &animation);
@@ -28,7 +28,7 @@ private:
 	void ChangeIndexData();
 
 	std::shared_ptr<AnimatedMeshStatefulData> m_data;
-	unsigned int m_state;
+	unsigned int m_state{0};
 };
 
 #endif

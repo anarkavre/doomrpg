@@ -9,8 +9,8 @@ class CGame;
 class CConfig
 {
 public:
-	CConfig() : m_initialized(false) {}
-	CConfig(CGame *game, const std::string &name) : m_initialized(false) { Initialize(game, name); }
+	CConfig() {}
+	CConfig(CGame *game, const std::string &name) { Initialize(game, name); }
 	~CConfig();
 
 	bool Initialize(CGame *game, const std::string &name);
@@ -24,7 +24,7 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
+	bool m_initialized{false};
 	std::string m_name;
 	std::map<std::string, std::string> m_variables;
 };

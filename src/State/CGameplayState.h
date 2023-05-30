@@ -23,7 +23,7 @@ public:
 	void RunLookEvent(Event *event, unsigned int direction);
 
 private:
-	CDoomRPG *m_doomrpg;
+	CDoomRPG *m_doomrpg{nullptr};
 	std::vector<unsigned int> m_nodeIndices;
 	std::shared_ptr<CSound> m_noUse;
 };

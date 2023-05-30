@@ -8,7 +8,7 @@ class IPlatform;
 class CTimer
 {
 public:
-	CTimer(IPlatform *platform = nullptr) : m_lastTime(0), m_elapsedTime(0.0), m_timeSampleIndex(0), m_timeSampleCount(0), m_frameCount(0), m_frameRate(0), m_averageFrameRate(0.0f), m_averageFrameRateCount(0), m_minimumFrameRate(INT_MAX), m_maximumFrameRate(INT_MIN), m_timeElapsed(0.0) { Initialize(platform); }
+	CTimer(IPlatform *platform = nullptr) { Initialize(platform); }
 
 	bool Initialize(IPlatform *platform);
 	void Update(unsigned int lockedFrameRate = 0);
@@ -23,17 +23,17 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
-	IPlatform *m_platform;
-	unsigned int m_lastTime, m_currentTime;
-	double m_elapsedTime;
-	double m_timeSamples[64];
-	unsigned int m_timeSampleIndex, m_timeSampleCount;
-	unsigned int m_frameCount, m_frameRate;
-	float m_averageFrameRate;
-	unsigned int m_averageFrameRateCount;
-	int m_minimumFrameRate, m_maximumFrameRate;
-	double m_timeElapsed;
+	bool m_initialized{false};
+	IPlatform *m_platform{nullptr};
+	unsigned int m_lastTime{0}, m_currentTime{0};
+	double m_elapsedTime{0.0};
+	double m_timeSamples[64]{0.0};
+	unsigned int m_timeSampleIndex{0}, m_timeSampleCount{0};
+	unsigned int m_frameCount{0}, m_frameRate{0};
+	float m_averageFrameRate{0.0f};
+	unsigned int m_averageFrameRateCount{0};
+	int m_minimumFrameRate{INT_MAX}, m_maximumFrameRate{INT_MIN};
+	double m_timeElapsed{0.0};
 	std::string m_frameRateText;
 };
 

@@ -32,8 +32,8 @@ class CFont;
 class CGame : public ISystem
 {
 public:
-	CGame() : m_initialized(false) {}
-	CGame(const std::string &title, const std::string &icon, const std::string &log, const std::string &config, int argc = 0, char *argv[] = nullptr) : m_initialized(false) { Initialize(title, icon, log, config, argc, argv); }
+	CGame() {}
+	CGame(const std::string &title, const std::string &icon, const std::string &log, const std::string &config, int argc = 0, char *argv[] = nullptr) { Initialize(title, icon, log, config, argc, argv); }
 	~CGame();
 
 	bool Initialize(const std::string &title = "Game", const std::string &icon = "", const std::string &log = "game.log", const std::string &config = "game.cfg", int argc = 0, char *argv[] = nullptr);
@@ -72,17 +72,17 @@ public:
 	bool IsRunning() const { return m_gameLoop.IsRunning(); }
 
 private:
-	bool m_initialized;
+	bool m_initialized{false};
 	std::string m_title;
 	std::string m_icon;
 	CLogger m_logger;
 	CConfig m_config;
 	CGameLoop m_gameLoop;
-	CGameState *m_gameState;
+	CGameState *m_gameState{nullptr};
 	CSDLPlatform m_sdlPlatform;
-	IPlatform *m_platform;
+	IPlatform *m_platform{nullptr};
 	COpenGLRenderer m_glRenderer;
-	IRenderer *m_renderer;
+	IRenderer *m_renderer{nullptr};
 	CResourceManager m_resourceManager;
 	CMaterialManager m_materialManager;
 	CGeometryManager m_geometryManager;

@@ -8,6 +8,7 @@ class CGame;
 
 enum class ECResourceType
 {
+	Undefined,
 	Animation,
 	Font,
 	Map,
@@ -20,7 +21,7 @@ enum class ECResourceType
 class CResource
 {
 public:
-	CResource(CGame *game) : m_game(game), m_handle(UINT_MAX) {}
+	CResource(CGame *game) : m_game(game) {}
 	CResource(CGame *game, unsigned int handle, const std::string &name, const std::string &path, ECResourceType type, bool openFile = true);
 	~CResource();
 
@@ -30,7 +31,7 @@ public:
 
 private:
 	std::ifstream m_ifstream;
-	unsigned long m_size;
+	unsigned long m_size{0};
 
 protected:
 	void CloseFile();
@@ -38,11 +39,11 @@ protected:
 	unsigned char *GetData(unsigned char *data, unsigned long size, unsigned long *count = nullptr);
 	unsigned long GetSize() const { return m_size; }
 
-	CGame *m_game;
-	unsigned int m_handle;
+	CGame *m_game{nullptr};
+	unsigned int m_handle{UINT_MAX};
 	std::string m_name;
 	std::string m_path;
-	ECResourceType m_type;
+	ECResourceType m_type{ECResourceType::Undefined};
 };
 
 #endif

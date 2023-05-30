@@ -15,4 +15,4 @@ else()
 	add_executable(doomrpg ${HEADER_FILES} ${SOURCE_FILES})
 endif()
 
-target_link_libraries(doomrpg ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_MIXER_LIBRARIES} ${OPENGL_LIBRARIES} GLEW::GLEW)
+target_link_libraries(doomrpg SDL2::SDL2 SDL2::SDL2main SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer OpenGL::GL GLEW::GLEW glm::glm)

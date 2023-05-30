@@ -8,8 +8,8 @@ class CGame;
 class CWindow
 {
 public:
-	CWindow() : m_initialized(false) {}
-	CWindow(CGame *game, const char *title, int x, int y, int w, int h, Uint32 flags, const char *icon = nullptr) : m_initialized(false), m_fullscreen(false) { Initialize(game, title, x, y, w, h, flags, icon); }
+	CWindow() {}
+	CWindow(CGame *game, const char *title, int x, int y, int w, int h, Uint32 flags, const char *icon = nullptr) { Initialize(game, title, x, y, w, h, flags, icon); }
 	~CWindow();
 
 	bool Initialize(CGame *game, const char *title, int x, int y, int w, int h, Uint32 flags, const char *icon = nullptr);
@@ -24,12 +24,12 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
-	SDL_Window *m_window;
-	Uint32 m_id;
-	int m_width, m_height;
-	bool m_fullscreen;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
+	SDL_Window *m_window{nullptr};
+	Uint32 m_id{0};
+	int m_width{0}, m_height{0};
+	bool m_fullscreen{false};
 };
 
 #endif

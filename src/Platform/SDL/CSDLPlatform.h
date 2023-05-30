@@ -11,8 +11,8 @@ class CWindow;
 class CSDLPlatform : public IPlatform
 {
 public:
-	CSDLPlatform() : IPlatform(ECPlatformType::SDL, "SDL"), m_initialized(false) {}
-	CSDLPlatform(CGame *game) : IPlatform(ECPlatformType::SDL, "SDL"), m_initialized(false) { Initialize(game); }
+	CSDLPlatform() : IPlatform(ECPlatformType::SDL, "SDL") {}
+	CSDLPlatform(CGame *game) : IPlatform(ECPlatformType::SDL, "SDL") { Initialize(game); }
 	~CSDLPlatform();
 
 	bool Initialize(CGame *game);
@@ -21,9 +21,9 @@ public:
 	CWindow &GetWindow() { return *m_window; }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
-	CWindow *m_window;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
+	CWindow *m_window{nullptr};
 };
 
 #endif

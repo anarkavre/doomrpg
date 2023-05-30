@@ -7,7 +7,7 @@ CMesh::~CMesh()
 		m_game->GetMeshManager().DestroyMesh(m_handle);
 }
 
-bool CMesh::Initialize(std::shared_ptr<CGeometry> geometry, const std::shared_ptr<CMaterial> material, bool instanced, bool billboard)
+bool CMesh::Initialize(std::shared_ptr<CGeometry> geometry, std::shared_ptr<CMaterial> material, bool instanced, bool billboard)
 {
 	if (!m_initialized)
 	{

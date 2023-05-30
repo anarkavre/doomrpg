@@ -9,10 +9,10 @@ class CGame;
 class CTextureAnimation
 {
 public:
-	CTextureAnimation() : m_initialized(false) {}
+	CTextureAnimation() {}
 	CTextureAnimation(const CTextureAnimation &textureAnimation) = default;
-	CTextureAnimation(CTextureAnimation &&textureAnimation) : m_initialized(std::exchange(textureAnimation.m_initialized, false)), m_game(textureAnimation.m_game), m_handle(textureAnimation.m_handle) {}
-	CTextureAnimation(CGame *game, const std::string &name) : m_initialized(false) { Initialize(game, name); }
+	CTextureAnimation(CTextureAnimation &&textureAnimation) noexcept : m_initialized(std::exchange(textureAnimation.m_initialized, false)), m_game(textureAnimation.m_game), m_handle(textureAnimation.m_handle) {}
+	CTextureAnimation(CGame *game, const std::string &name) { Initialize(game, name); }
 	~CTextureAnimation();
 
 	bool Initialize(CGame *game, const std::string &name);
@@ -27,9 +27,9 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
-	unsigned int m_handle;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
+	unsigned int m_handle{0};
 };
 
 #endif

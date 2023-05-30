@@ -12,7 +12,7 @@ class CGame;
 class CGeometryManager
 {
 public:
-	CGeometryManager(CGame *game = nullptr) : m_initialized(false) { Initialize(game); }
+	CGeometryManager(CGame *game = nullptr) { Initialize(game); }
 
 	bool Initialize(CGame *game);
 
@@ -23,8 +23,8 @@ public:
 	bool IsInitialized() const { return m_initialized; }
 
 private:
-	bool m_initialized;
-	CGame *m_game;
+	bool m_initialized{false};
+	CGame *m_game{nullptr};
 	CPool<std::weak_ptr<CGeometry>> m_geometryPool;
 };
 

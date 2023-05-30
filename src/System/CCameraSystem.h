@@ -29,6 +29,6 @@ private:
 
 	std::list<CCamera *> m_cameras;
 	CCamera m_defaultCamera;
-	CCamera *m_viewCamera;
+	CCamera *m_viewCamera{nullptr};
 };
 #endif

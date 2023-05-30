@@ -89,7 +89,7 @@ bool CDialog::Update(float elapsedTime)
 	{
 		if (m_printing)
 		{
-			m_end = glm::min(m_lines.size(), m_start + 4);
+			m_end = glm::min(static_cast<unsigned int>(m_lines.size()), m_start + 4);
 			m_index = m_lines[m_end - 1].length();
 			m_printTicCount = m_printTics;
 			m_printing = false;

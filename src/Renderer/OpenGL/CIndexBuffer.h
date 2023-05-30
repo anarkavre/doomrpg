@@ -6,7 +6,7 @@
 class CIndexBuffer
 {
 public:
-	CIndexBuffer(IRenderer *renderer = nullptr, const void *data = nullptr, unsigned int size = 0, bool dynamic = false) : m_initialized(false) { Initialize(renderer, data, size, dynamic); }
+	CIndexBuffer(IRenderer *renderer = nullptr, const void *data = nullptr, unsigned int size = 0, bool dynamic = false) { Initialize(renderer, data, size, dynamic); }
 	~CIndexBuffer();
 
 	bool Initialize(IRenderer *renderer, const void *data, unsigned int size, bool dynamic = false);
@@ -23,11 +23,11 @@ public:
 	bool IsDynamic() const { return m_dynamic; }
 
 private:
-	bool m_initialized;
-	IRenderer *m_renderer;
-	unsigned int m_handle;
-	unsigned int m_size;
-	bool m_dynamic;
+	bool m_initialized{false};
+	IRenderer *m_renderer{nullptr};
+	unsigned int m_handle{0};
+	unsigned int m_size{0};
+	bool m_dynamic{false};
 };
 
 #endif

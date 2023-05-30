@@ -12,7 +12,7 @@
 class CInputSystem : public ISystem, public IEventHandler
 {
 public:
-	CInputSystem(CGame *game = nullptr) : m_gameController(nullptr) { Initialize(game); }
+	CInputSystem(CGame *game = nullptr) { Initialize(game); }
 	~CInputSystem();
 
 	bool Initialize(CGame *game);
@@ -27,7 +27,7 @@ public:
 private:
 	std::unordered_map<std::string, CInputAction> m_actions;
 	std::unordered_map<SDL_Keycode, CInputAction *> m_bindings;
-	SDL_GameController *m_gameController;
+	SDL_GameController *m_gameController{nullptr};
 };
 
 #endif

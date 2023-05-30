@@ -39,12 +39,12 @@ public:
 	bool IsEx() const { return m_isEx; }
 
 private:
-	bool m_isEx;
-	mappings_t *m_mappings;
-	entities_t *m_entities;
-	entitiesex_t *m_entitiesex;
-	strings_t *m_baseStrings;
-	strings_t *m_entityStrings;
+	bool m_isEx{false};
+	mappings_t *m_mappings{nullptr};
+	entities_t *m_entities{nullptr};
+	entitiesex_t *m_entitiesex{nullptr};
+	strings_t *m_baseStrings{nullptr};
+	strings_t *m_entityStrings{nullptr};
 	std::unordered_map<unsigned int, entity_t *> m_entitiesMap;
 	std::unordered_map<unsigned int, char *> m_entityStringsMap;
 	std::shared_ptr<CTexture> m_texture[2];

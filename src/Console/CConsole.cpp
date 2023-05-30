@@ -9,7 +9,7 @@
 #include "Resource/CFont.h"
 #include "Window/CWindow.h"
 
-CConsole::CConsole(CGame *game, unsigned int columns, unsigned int rows, unsigned int maxLines, unsigned int maxInputChars, float speed, const std::string &font) : m_initialized(false), m_columns(columns), m_rows(rows), m_maxLines(maxLines), m_maxInputChars(maxInputChars), m_speed(speed), m_fgColor({ 255, 255, 255, 255 }), m_bgColor({ 44, 117, 151, 64 }), m_state(ECConsoleState::Closed)
+CConsole::CConsole(CGame *game, unsigned int columns, unsigned int rows, unsigned int maxLines, unsigned int maxInputChars, float speed, const std::string &font) : m_columns(columns), m_rows(rows), m_maxLines(maxLines), m_maxInputChars(maxInputChars), m_speed(speed)
 {
 	if (m_columns < defaultMinColumns)
 		m_columns = defaultMinColumns;

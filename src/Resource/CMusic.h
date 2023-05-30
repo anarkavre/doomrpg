@@ -22,8 +22,8 @@ public:
 	static const std::string &GetResourcePath() { return m_resourcePath; }
 
 private:
-	Mix_Music *m_music;
-	bool m_repeat;
+	Mix_Music *m_music{nullptr};
+	bool m_repeat{false};
 
 	static const std::string m_resourcePath;
 };

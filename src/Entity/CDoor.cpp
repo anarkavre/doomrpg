@@ -4,7 +4,7 @@
 #include "Resource/CSound.h"
 #include "doomrpg_sounds.h"
 
-CDoor::CDoor(CDoomRPG *doomrpg, const linesegment_t *line) : CEntity(doomrpg, ENTITY_DOOR + line->texture), m_open(false), m_state(m_doomrpg->GetEntity(ENTITY_DOOR + line->texture) != nullptr && m_doomrpg->GetEntity(ENTITY_DOOR + line->texture)->parameter1 == ENTITY_DOOR_LOCKED ? ECDoorState::Locked : ECDoorState::Closed), m_openDelayTics(0), m_closeDelayTics(0), m_speed(2.0f)
+CDoor::CDoor(CDoomRPG *doomrpg, const linesegment_t *line) : CEntity(doomrpg, ENTITY_DOOR + line->texture), m_state(m_doomrpg->GetEntity(ENTITY_DOOR + line->texture) != nullptr && m_doomrpg->GetEntity(ENTITY_DOOR + line->texture)->parameter1 == ENTITY_DOOR_LOCKED ? ECDoorState::Locked : ECDoorState::Closed)
 {
 	float x1 = line->start.x * 8 / 64.0f;
 	float z1 = line->start.y * 8 / 64.0f;
