@@ -12,6 +12,19 @@ bool CGameplayState::Initialize(CGame *game)
 	{
 		m_doomrpg = static_cast<CDoomRPG *>(m_game);
 
+		CPlayer &player = m_doomrpg->GetPlayer();
+		player.SetHealth(30);
+		player.SetMaxHealth(30);
+		player.SetArmor(0);
+		player.SetMaxArmor(30);
+		player.SetCredits(0);
+		player.SetMaxCredits(UINT_MAX);
+
+		m_doomrpg->LoadMap("intro.bsp");
+
+		m_doomrpg->GetStatus().Initialize(m_doomrpg);
+		m_doomrpg->GetDialog().Initialize(m_doomrpg);
+
 		m_noUse = m_doomrpg->GetResourceManager().AcquireResource<CSound>(std::string(SOUND_NO_USE) + ".wav");
 
 		m_initialized = true;
@@ -93,8 +106,10 @@ void CGameplayState::Update()
 	m_doomrpg->GetDialog().Render();
 }
 
-void CGameplayState::RunActionEvent(Event *event)
+bool CGameplayState::RunActionEvent(Event *event)
 {
+	bool isLastCommand = false;
+
 	if (event != nullptr && event->onActionCommands.size() != 0)
 	{
 		if (!m_doomrpg->GetDialog().IsShown())
@@ -108,6 +123,8 @@ void CGameplayState::RunActionEvent(Event *event)
 			unsigned int variable = event->variable;
 
 			const std::vector<unsigned int> &commands = event->onActionCommands[variable];
+
+			isLastCommand = (commands.empty() || commands[event->currentCommand] == event->commandCount - 1);
 
 			while (!event->halted && event->currentCommand < commands.size())
 			{
@@ -127,6 +144,8 @@ void CGameplayState::RunActionEvent(Event *event)
 
 		m_noUse->Play();
 	}
+
+	return isLastCommand;
 }
 
 bool CGameplayState::RunEnterEvent(Event *event, unsigned int direction)
@@ -153,7 +172,7 @@ bool CGameplayState::RunEnterEvent(Event *event, unsigned int direction)
 				event->currentCommand++;
 			}
 
-			if (event->currentCommand > commands.size())
+			if (event->currentCommand == commands.size())
 				event->currentCommand = 0;
 		}
 	}
@@ -185,7 +204,7 @@ bool CGameplayState::RunLeaveEvent(Event *event, unsigned int direction)
 				event->currentCommand++;
 			}
 
-			if (event->currentCommand > commands.size())
+			if (event->currentCommand == commands.size())
 				event->currentCommand = 0;
 		}
 	}
@@ -193,8 +212,10 @@ bool CGameplayState::RunLeaveEvent(Event *event, unsigned int direction)
 	return isLastCommand;
 }
 
-void CGameplayState::RunLookEvent(Event *event, unsigned int direction)
+bool CGameplayState::RunLookEvent(Event *event, unsigned int direction)
 {
+	bool isLastCommand = false;
+
 	if (event != nullptr && event->onLookCommands[direction].size() != 0)
 	{
 		if (!m_doomrpg->GetDialog().IsShown())
@@ -204,6 +225,8 @@ void CGameplayState::RunLookEvent(Event *event, unsigned int direction)
 		{
 			const std::vector<unsigned int> &commands = event->onLookCommands[direction];
 
+			isLastCommand = (commands.empty() || commands[event->currentCommand] == event->commandCount - 1);
+
 			while (!event->halted && event->currentCommand < commands.size())
 			{
 				m_doomrpg->GetMap()->ExecuteCommand(event, commands[event->currentCommand]);
@@ -211,8 +234,10 @@ void CGameplayState::RunLookEvent(Event *event, unsigned int direction)
 				event->currentCommand++;
 			}
 
-			if (event->currentCommand > commands.size())
+			if (event->currentCommand == commands.size())
 				event->currentCommand = 0;
 		}
 	}
+
+	return isLastCommand;
 }

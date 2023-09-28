@@ -42,7 +42,7 @@ std::shared_ptr<T> CGeometryManager::AcquireGeometry(unsigned int id, const std:
 
 	unsigned int handle = m_geometryPool.Add(std::weak_ptr<CGeometry>());
 
-	geometry = std::shared_ptr<T>(std::make_shared<T>(m_game, handle, id, name));
+	geometry = std::make_shared<T>(m_game, handle, id, name);
 
 	m_geometryPool.Set(handle, geometry);
 

@@ -27,4 +27,5 @@ private:
 	CGame *m_game{nullptr};
 	CPool<std::weak_ptr<CMaterial>> m_materialPool;
 };
+
 #endif

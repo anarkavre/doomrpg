@@ -17,6 +17,8 @@ bool CVertexBuffer::Initialize(IRenderer *renderer, const ECVertexComponent *com
 	if (!m_initialized && renderer != nullptr)
 	{
 		m_renderer = renderer;
+		m_size = size;
+		m_dynamic = dynamic;
 
 		m_renderer->CreateVertexBuffer(components, componentCount, data, size, dynamic, m_handle);
 

@@ -204,8 +204,8 @@ void CRenderSystem::UpdateScene()
 	m_sceneEntityBatches.clear();
 	m_sceneEntityMeshLookup.clear();
 
-	std::map<std::pair<std::vector<ECVertexComponent>, bool>, std::list<std::pair<CVertexBuffer *, std::list<SceneEntityBatch>>>::iterator> sceneEntityBatchesLookup;
-	std::map<std::pair<std::vector<ECVertexComponent>, bool>, VertexDataBucket> vertexDataBuckets;
+	std::map<std::pair<std::vector<ECVertexComponent>, std::pair<bool, bool>>, std::list<std::pair<CVertexBuffer *, std::list<SceneEntityBatch>>>::iterator> sceneEntityBatchesLookup;
+	std::map<std::pair<std::vector<ECVertexComponent>, std::pair<bool, bool>>, VertexDataBucket> vertexDataBuckets;
 	const std::list<unsigned int> &sceneEntityHandles = m_game->GetSceneSystem().GetSceneEntityHandles();
 
 	for (auto it = sceneEntityHandles.begin(); it != sceneEntityHandles.end(); ++it)
@@ -214,8 +214,9 @@ void CRenderSystem::UpdateScene()
 		SceneEntityData &sceneEntity = m_game->GetSceneSystem().GetSceneEntity(handle);
 		CMesh *mesh = static_cast<CMesh *>(sceneEntity.object.get());
 		bool instanced = mesh->IsInstanced();
+		bool blended = mesh->GetMaterial()->GetBlendMode() != ECBlendMode::None;
 		CGeometry *geometry = mesh->GetGeometry();
-		std::pair<std::vector<ECVertexComponent>, bool> criteria{ geometry->GetVertexComponents(), instanced };
+		std::pair<std::vector<ECVertexComponent>, std::pair<bool, bool>> criteria{ geometry->GetVertexComponents(), { instanced, blended } };
 
 		if (sceneEntityBatchesLookup.count(criteria) == 0)
 		{
@@ -266,7 +267,7 @@ void CRenderSystem::UpdateScene()
 
 	for (auto it = vertexDataBuckets.begin(); it != vertexDataBuckets.end(); ++it)
 	{
-		std::pair<std::vector<ECVertexComponent>, bool> criteria = (*it).first;
+		std::pair<std::vector<ECVertexComponent>, std::pair<bool, bool>> criteria = (*it).first;
 		const std::vector<ECVertexComponent> &vertexComponents = criteria.first;
 		const std::vector<float> &vertexData = (*it).second.vertexData;
 		unsigned int vertexCount = (*it).second.vertexCount;

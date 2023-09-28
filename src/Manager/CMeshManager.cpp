@@ -16,7 +16,8 @@ std::shared_ptr<CMesh> CMeshManager::GetMesh(unsigned int id, const std::string 
 	if (!m_initialized || m_meshPool.IsEmpty())
 		return nullptr;
 
-	for (auto it = m_meshPool.GetPool().cbegin(); it != m_meshPool.GetPool().cend(); ++it) {
+	for (auto it = m_meshPool.GetPool().cbegin(); it != m_meshPool.GetPool().cend(); ++it)
+	{
 		if (!((*it).expired()))
 		{
 			std::shared_ptr<CMesh> mesh = (*it).lock();

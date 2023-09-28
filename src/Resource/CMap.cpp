@@ -44,6 +44,7 @@ CMap::CMap(CGame *game, unsigned int handle, const std::string &name) : CResourc
 
 		m_playerPosition = glm::vec3((m_mapex->header.playerPosition & 0x1F) + 0.5f, 0.0f, ((m_mapex->header.playerPosition >> 5) & 0x1F) + 0.5f);
 		m_playerAngle = m_mapex->header.playerAngle * 180.0f / 128;
+		m_cameraPosition = glm::vec3((m_mapex->header.cameraPosition & 0x1F) + 0.5f, 0.0f, ((m_mapex->header.cameraPosition >> 5) & 0x1F) + 0.5f);
 
 		blockMap = m_mapex->blockMap;
 		eventCount = m_mapex->eventCount;
@@ -681,7 +682,7 @@ void CMap::BuildMap()
 			m_entities.push_back(newThing);
 			m_things.push_back(newThing);
 
-			if (doomrpg->IsEx() && thing->id == ENTITY_YELLOW_LAMP)
+			if (doomrpg->IsEx() && (thing->id == ENTITY_YELLOW_LAMP || thing->id == ENTITY_BLUE_LAMP))
 			{
 				thing_t light = *thing;
 				light.id = ENTITY_LIGHT_1;
@@ -741,7 +742,7 @@ void CMap::BuildMap()
 		while (count--)
 			*pixel++ = color;
 
-		std::shared_ptr<CTexture> texture = std::shared_ptr<CTexture>(std::make_shared<CTexture>(m_game, pixels, 64, 128, 1, 2));
+		std::shared_ptr<CTexture> texture = std::make_shared<CTexture>(m_game, pixels, 64, 128, 1, 2);
 
 		delete[] pixels;
 

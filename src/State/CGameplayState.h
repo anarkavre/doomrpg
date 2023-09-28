@@ -17,10 +17,10 @@ public:
 
 	bool Initialize(CGame *game);
 	void Update();
-	void RunActionEvent(Event *event);
+	bool RunActionEvent(Event *event);
 	bool RunEnterEvent(Event *event, unsigned int direction);
 	bool RunLeaveEvent(Event *event, unsigned int direction);
-	void RunLookEvent(Event *event, unsigned int direction);
+	bool RunLookEvent(Event *event, unsigned int direction);
 
 private:
 	CDoomRPG *m_doomrpg{nullptr};

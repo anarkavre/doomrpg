@@ -16,7 +16,8 @@ std::shared_ptr<CResource> CResourceManager::GetResource(const std::string &name
 	if (!m_initialized || m_resourcePool.IsEmpty())
 		return nullptr;
 
-	for (auto it = m_resourcePool.GetPool().cbegin(); it != m_resourcePool.GetPool().cend(); ++it) {
+	for (auto it = m_resourcePool.GetPool().cbegin(); it != m_resourcePool.GetPool().cend(); ++it)
+	{
 		if (!((*it).expired()))
 		{
 			std::shared_ptr<CResource> resource = (*it).lock();
@@ -34,7 +35,8 @@ void CResourceManager::GetResources(ECResourceType type, std::vector<std::shared
 	if (!m_initialized || m_resourcePool.IsEmpty())
 		return;
 
-	for (auto it = m_resourcePool.GetPool().cbegin(); it != m_resourcePool.GetPool().cend(); ++it) {
+	for (auto it = m_resourcePool.GetPool().cbegin(); it != m_resourcePool.GetPool().cend(); ++it)
+	{
 		if (!((*it).expired()))
 		{
 			std::shared_ptr<CResource> resource = (*it).lock();

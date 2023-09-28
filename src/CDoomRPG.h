@@ -7,6 +7,7 @@
 #include "Game/CGame.h"
 #include "Player/CPlayer.h"
 #include "State/CGameplayState.h"
+#include "State/CMenuState.h"
 #include "UI/CDialog.h"
 #include "UI/CStatus.h"
 #include "doomrpg_data.h"
@@ -34,6 +35,7 @@ public:
 	std::shared_ptr<CMap> GetMap() const { return m_map; }
 	CStatus &GetStatus() { return m_status; }
 	CDialog &GetDialog() { return m_dialog; }
+	CMenuState &GetMenuState() { return m_menuState; }
 	CGameplayState &GetGameplayState() { return m_gameplayState; }
 
 	bool IsEx() const { return m_isEx; }
@@ -52,6 +54,7 @@ private:
 	std::shared_ptr<CMap> m_map;
 	CStatus m_status;
 	CDialog m_dialog;
+	CMenuState m_menuState;
 	CGameplayState m_gameplayState;
 };
 

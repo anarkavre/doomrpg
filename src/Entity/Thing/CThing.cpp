@@ -11,7 +11,7 @@ CThing::CThing(CDoomRPG *doomrpg, const thing_t *thing) : CEntity(doomrpg, thing
 	SetHidden(thing->flags & TF_HIDDEN);
 	UpdateTransformationMatrix();
 
-	if (GetId() != ENTITY_PISTOL && GetId() != 0xD8)
+	if (GetId() != ENTITY_PISTOL && (GetId() & 0xD0) != 0xD0)
 	{
 		if (GetType() == ENTITY_TYPE_AMMO_MULTIPLE)
 		{

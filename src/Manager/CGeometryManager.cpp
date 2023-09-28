@@ -16,7 +16,8 @@ std::shared_ptr<CGeometry> CGeometryManager::GetGeometry(unsigned int id, const 
 	if (!m_initialized || m_geometryPool.IsEmpty())
 		return nullptr;
 
-	for (auto it = m_geometryPool.GetPool().cbegin(); it != m_geometryPool.GetPool().cend(); ++it) {
+	for (auto it = m_geometryPool.GetPool().cbegin(); it != m_geometryPool.GetPool().cend(); ++it)
+	{
 		if (!((*it).expired()))
 		{
 			std::shared_ptr<CGeometry> geometry = (*it).lock();

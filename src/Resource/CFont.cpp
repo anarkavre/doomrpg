@@ -61,7 +61,7 @@ CFont::CFont(CGame *game, unsigned int handle, const std::string &name) : CResou
 
 		memcpy(m_widthData, &data[WIDTH_DATA_OFFSET], 256);
 
-		m_texture = std::shared_ptr<CTexture>(std::make_shared<CTexture>(m_game, &data[MAP_DATA_OFFSET], m_fontWidth, m_fontHeight, m_bpp));
+		m_texture = std::make_shared<CTexture>(m_game, &data[MAP_DATA_OFFSET], m_fontWidth, m_fontHeight, m_bpp);
 
 		delete[] data;
 	}

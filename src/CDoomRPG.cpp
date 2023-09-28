@@ -75,12 +75,12 @@ bool CDoomRPG::Initialize(int argc, char *argv[])
 
 		ECTextureFilter textureFilter = static_cast<ECTextureFilter>(GetConsole().GetVariable("r_texture_filter").GetInt());
 
-		m_texture[0] = std::shared_ptr<CTexture>(std::make_shared<CTexture>(this, image[0], imageWidth[0], imageHeight[0], imageWidth[0] / 64, imageHeight[0] / 64));
+		m_texture[0] = std::make_shared<CTexture>(this, image[0], imageWidth[0], imageHeight[0], imageWidth[0] / 64, imageHeight[0] / 64);
 		m_texture[0]->GenerateMipmaps();
 		m_texture[0]->SetFilter(textureFilter);
 		m_texture[0]->SetWrap(ECTextureCoord::V, ECTextureWrap::Clamp);
 
-		m_texture[1] = std::shared_ptr<CTexture>(std::make_shared<CTexture>(this, image[1], imageWidth[1], imageHeight[1], imageWidth[1] / 64, imageHeight[1] / 64));
+		m_texture[1] = std::make_shared<CTexture>(this, image[1], imageWidth[1], imageHeight[1], imageWidth[1] / 64, imageHeight[1] / 64);
 		m_texture[1]->GenerateMipmaps();
 		m_texture[1]->SetFilter(textureFilter);
 		m_texture[1]->SetWrap(ECTextureWrap::Clamp);
@@ -89,18 +89,8 @@ bool CDoomRPG::Initialize(int argc, char *argv[])
 		free(image[1]);
 
 		m_player.Initialize(this);
-		m_player.SetHealth(30);
-		m_player.SetMaxHealth(30);
-		m_player.SetArmor(0);
-		m_player.SetMaxArmor(30);
-		m_player.SetCredits(0);
-		m_player.SetMaxCredits(UINT_MAX);
 
-		LoadMap("intro.bsp");
-
-		m_status.Initialize(this);
-		m_dialog.Initialize(this);
-
+		//m_menuState.Initialize(this);
 		m_gameplayState.Initialize(this);
 		SetGameState(&m_gameplayState);
 	}

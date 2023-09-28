@@ -117,7 +117,7 @@ bool CPlayer::Initialize(CDoomRPG *doomrpg)
 
 bool CPlayer::Update(float elapsedTime)
 {
-	if (!m_camera.IsMoving() && !m_camera.IsTurning())
+	if (!m_camera.IsMoving() && !m_camera.IsTurning() && !m_camera.IsLocked())
 	{
 		unsigned int blockX = static_cast<unsigned int>(m_camera.GetX());
 		unsigned int blockY = static_cast<unsigned int>(m_camera.GetZ());
@@ -158,179 +158,180 @@ bool CPlayer::Update(float elapsedTime)
 					}
 				}
 			}
-		}
 
-		if (!m_doomrpg->GetDialog().IsShown())
-		{
-			if (blockX != oldBlockX || blockY != oldBlockY)
+			Event *event = m_doomrpg->GetMap()->GetEvent(blockX, blockY);
+			unsigned int direction;
+
+			if (blockY > oldBlockY)
+				direction = 0;
+			else if (blockX < oldBlockX)
+				direction = 1;
+			else if (blockY < oldBlockY)
+				direction = 2;
+			else if (blockX > oldBlockX)
+				direction = 3;
+
+			bool isLastCommand = m_doomrpg->GetGameplayState().RunEnterEvent(event, direction);
+
+			if (isLastCommand)
 			{
-				Event *event = m_doomrpg->GetMap()->GetEvent(blockX, blockY);
-				unsigned int direction;
+				m_camera.SetOldX(m_camera.GetX());
+				m_camera.SetOldZ(m_camera.GetZ());
 
-				if (blockY > oldBlockY)
-					direction = 0;
-				else if (blockX < oldBlockX)
-					direction = 1;
-				else if (blockY < oldBlockY)
-					direction = 2;
-				else if (blockX > oldBlockX)
-					direction = 3;
-
-				bool isLastCommand = m_doomrpg->GetGameplayState().RunEnterEvent(event, direction);
-
-				if (isLastCommand)
-				{
-					m_camera.SetOldX(m_camera.GetX());
-					m_camera.SetOldZ(m_camera.GetZ());
-
-					m_action->SetPressed(false);
-				}
-
-				float playerAngle = m_camera.GetAngleY() + 90.0f;
-
-				if (playerAngle > 45.0f && playerAngle <= 135.0f)
-					direction = 0;
-				else if (playerAngle > 135.0f && playerAngle <= 225.0f)
-					direction = 3;
-				else if (playerAngle > 225.0f && playerAngle <= 315.0f)
-					direction = 2;
-				else
-					direction = 1;
-
-				if (!m_doomrpg->GetDialog().IsShown())
-					m_doomrpg->GetGameplayState().RunLookEvent(event, direction);
-
-				event = m_doomrpg->GetMap()->GetEvent(oldBlockX, oldBlockY);
-
-				if (blockY < oldBlockY)
-					direction = 0;
-				else if (blockX > oldBlockX)
-					direction = 1;
-				else if (blockY > oldBlockY)
-					direction = 2;
-				else if (blockX < oldBlockX)
-					direction = 3;
-
-				isLastCommand = m_doomrpg->GetGameplayState().RunLeaveEvent(event, direction);
-
-				if (isLastCommand)
-				{
-					m_camera.SetOldX(m_camera.GetX());
-					m_camera.SetOldZ(m_camera.GetZ());
-
-					m_action->SetPressed(false);
-				}
+				m_action->SetPressed(false);
 			}
 
-			if (!IsAttacking())
+			float playerAngle = m_camera.GetAngleY() + 90.0f;
+
+			if (playerAngle > 45.0f && playerAngle <= 135.0f)
+				direction = 0;
+			else if (playerAngle > 135.0f && playerAngle <= 225.0f)
+				direction = 3;
+			else if (playerAngle > 225.0f && playerAngle <= 315.0f)
+				direction = 2;
+			else
+				direction = 1;
+
+			if (!m_doomrpg->GetDialog().IsShown())
+				m_doomrpg->GetGameplayState().RunLookEvent(event, direction);
+
+			event = m_doomrpg->GetMap()->GetEvent(oldBlockX, oldBlockY);
+
+			if (blockY < oldBlockY)
+				direction = 0;
+			else if (blockX > oldBlockX)
+				direction = 1;
+			else if (blockY > oldBlockY)
+				direction = 2;
+			else if (blockX < oldBlockX)
+				direction = 3;
+
+			isLastCommand = m_doomrpg->GetGameplayState().RunLeaveEvent(event, direction);
+
+			if (isLastCommand)
 			{
-				if (m_action->IsPressed())
+				m_camera.SetOldX(m_camera.GetX());
+				m_camera.SetOldZ(m_camera.GetZ());
+
+				m_action->SetPressed(false);
+			}
+		}
+
+		if (!IsAttacking())
+		{
+			if (m_action->IsPressed())
+			{
+				static bool isLastCommand = false;
+
+				CEntity *target = static_cast<CEntity *>(GetTarget());
+
+				if (target != nullptr && (target->GetType() == ENTITY_TYPE_ENEMY || target->GetType() == ENTITY_TYPE_FIRE || target->GetType() == ENTITY_TYPE_DESTRUCTIBLE))
 				{
-					CEntity *target = static_cast<CEntity *>(GetTarget());
+					Attack();
 
-					if (target != nullptr && (target->GetType() == ENTITY_TYPE_ENEMY || target->GetType() == ENTITY_TYPE_FIRE || target->GetType() == ENTITY_TYPE_DESTRUCTIBLE))
-					{
-						Attack();
-
-						if (!IsAttacking())
-						{
-							std::string message = m_doomrpg->GetBaseString(66);
-							m_doomrpg->GetStatus().AddMessage(message);
-
-							m_noUse->Play();
-						}
-					}
-					else if (target != nullptr && target->GetType() == ENTITY_TYPE_DOOR && static_cast<CDoor *>(target)->GetState() == ECDoorState::Locked)
+					if (!IsAttacking())
 					{
 						std::string message = m_doomrpg->GetBaseString(66);
 						m_doomrpg->GetStatus().AddMessage(message);
 
 						m_noUse->Play();
 					}
+				}
+				else if (target != nullptr && target->GetType() == ENTITY_TYPE_DOOR && static_cast<CDoor *>(target)->GetState() == ECDoorState::Locked)
+				{
+					std::string message = m_doomrpg->GetBaseString(66);
+					m_doomrpg->GetStatus().AddMessage(message);
+
+					m_noUse->Play();
+				}
+				else if (m_doomrpg->GetDialog().IsCanceled() || !isLastCommand)
+				{
+					float playerAngle = m_camera.GetAngleY() + 90.0f;
+
+					if (playerAngle > 45.0f && playerAngle <= 135.0f)
+						blockY--;
+					else if (playerAngle > 135.0f && playerAngle <= 225.0f)
+						blockX--;
+					else if (playerAngle > 225.0f && playerAngle <= 315.0f)
+						blockY++;
 					else
-					{
-						float playerAngle = m_camera.GetAngleY() + 90.0f;
+						blockX++;
 
-						if (playerAngle > 45.0f && playerAngle <= 135.0f)
-							blockY--;
-						else if (playerAngle > 135.0f && playerAngle <= 225.0f)
-							blockX--;
-						else if (playerAngle > 225.0f && playerAngle <= 315.0f)
-							blockY++;
-						else
-							blockX++;
+					Event* event = m_doomrpg->GetMap()->GetEvent(blockX, blockY);
 
-						Event *event = m_doomrpg->GetMap()->GetEvent(blockX, blockY);
+					isLastCommand = m_doomrpg->GetGameplayState().RunActionEvent(event);
 
-						m_doomrpg->GetGameplayState().RunActionEvent(event);
-					}
-
-					m_action->SetPressed(false);
+					if (!m_doomrpg->GetDialog().IsShown() && isLastCommand)
+						isLastCommand = false;
 				}
+				else
+					isLastCommand = false;
 
-				if (m_weaponAction[0]->IsPressed())
-				{
-					if (GetWeapon(0) != nullptr)
-						SetCurrentWeapon(0);
+				m_action->SetPressed(false);
+			}
 
-					m_weaponAction[0]->SetPressed(false);
-				}
-				else if (m_weaponAction[1]->IsPressed())
-				{
-					if (GetWeapon(1) != nullptr)
-						SetCurrentWeapon(1);
+			if (m_weaponAction[0]->IsPressed())
+			{
+				if (GetWeapon(0) != nullptr)
+					SetCurrentWeapon(0);
 
-					m_weaponAction[1]->SetPressed(false);
-				}
-				else if (m_weaponAction[2]->IsPressed())
-				{
-					if (GetWeapon(2) != nullptr)
-						SetCurrentWeapon(2);
+				m_weaponAction[0]->SetPressed(false);
+			}
+			else if (m_weaponAction[1]->IsPressed())
+			{
+				if (GetWeapon(1) != nullptr)
+					SetCurrentWeapon(1);
 
-					m_weaponAction[2]->SetPressed(false);
-				}
-				else if (m_weaponAction[3]->IsPressed())
-				{
-					if (GetWeapon(3) != nullptr)
-						SetCurrentWeapon(3);
+				m_weaponAction[1]->SetPressed(false);
+			}
+			else if (m_weaponAction[2]->IsPressed())
+			{
+				if (GetWeapon(2) != nullptr)
+					SetCurrentWeapon(2);
 
-					m_weaponAction[3]->SetPressed(false);
-				}
-				else if (m_weaponAction[4]->IsPressed())
-				{
-					if (GetWeapon(4) != nullptr)
-						SetCurrentWeapon(4);
+				m_weaponAction[2]->SetPressed(false);
+			}
+			else if (m_weaponAction[3]->IsPressed())
+			{
+				if (GetWeapon(3) != nullptr)
+					SetCurrentWeapon(3);
 
-					m_weaponAction[4]->SetPressed(false);
-				}
-				else if (m_weaponAction[5]->IsPressed())
-				{
-					if (GetWeapon(5) != nullptr)
-						SetCurrentWeapon(5);
+				m_weaponAction[3]->SetPressed(false);
+			}
+			else if (m_weaponAction[4]->IsPressed())
+			{
+				if (GetWeapon(4) != nullptr)
+					SetCurrentWeapon(4);
 
-					m_weaponAction[5]->SetPressed(false);
-				}
-				else if (m_weaponAction[6]->IsPressed())
-				{
-					if (GetWeapon(6) != nullptr)
-						SetCurrentWeapon(6);
+				m_weaponAction[4]->SetPressed(false);
+			}
+			else if (m_weaponAction[5]->IsPressed())
+			{
+				if (GetWeapon(5) != nullptr)
+					SetCurrentWeapon(5);
 
-					m_weaponAction[6]->SetPressed(false);
-				}
-				else if (m_weaponAction[7]->IsPressed())
-				{
-					if (GetWeapon(7) != nullptr)
-						SetCurrentWeapon(7);
+				m_weaponAction[5]->SetPressed(false);
+			}
+			else if (m_weaponAction[6]->IsPressed())
+			{
+				if (GetWeapon(6) != nullptr)
+					SetCurrentWeapon(6);
 
-					m_weaponAction[7]->SetPressed(false);
-				}
-				else if (m_weaponAction[8]->IsPressed())
-				{
-					if (GetWeapon(8) != nullptr)
-						SetCurrentWeapon(8);
+				m_weaponAction[6]->SetPressed(false);
+			}
+			else if (m_weaponAction[7]->IsPressed())
+			{
+				if (GetWeapon(7) != nullptr)
+					SetCurrentWeapon(7);
 
-					m_weaponAction[8]->SetPressed(false);
-				}
+				m_weaponAction[7]->SetPressed(false);
+			}
+			else if (m_weaponAction[8]->IsPressed())
+			{
+				if (GetWeapon(8) != nullptr)
+					SetCurrentWeapon(8);
+
+				m_weaponAction[8]->SetPressed(false);
 			}
 		}
 	}

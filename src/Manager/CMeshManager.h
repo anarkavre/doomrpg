@@ -43,7 +43,7 @@ std::shared_ptr<T> CMeshManager::AcquireMesh(unsigned int id, const std::string 
 
 	unsigned int handle = m_meshPool.Add(std::weak_ptr<CMesh>());
 
-	mesh = std::shared_ptr<T>(std::make_shared<T>(m_game, handle, id, name));
+	mesh = std::make_shared<T>(m_game, handle, id, name);
 
 	m_meshPool.Set(handle, mesh);
 
@@ -61,9 +61,9 @@ std::shared_ptr<T> CMeshManager::AcquireMeshInstanced(unsigned int id, const std
 	unsigned int handle = m_meshPool.Add(std::weak_ptr<CMesh>());
 
 	if (mesh != nullptr)
-		mesh = std::shared_ptr<T>(std::make_shared<T>(handle, *static_cast<T *>(mesh.get())));
+		mesh = std::make_shared<T>(handle, *static_cast<T *>(mesh.get()));
 	else
-		mesh = std::shared_ptr<T>(std::make_shared<T>(m_game, handle, id, name));
+		mesh = std::make_shared<T>(m_game, handle, id, name);
 
 	m_meshPool.Set(handle, mesh);
 

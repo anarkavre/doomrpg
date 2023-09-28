@@ -37,6 +37,7 @@ public:
 
 	const glm::vec3 &GetPlayerPosition() const { return m_playerPosition; }
 	float GetPlayerAngle() const { return m_playerAngle; }
+	const glm::vec3& GetCameraPosition() const { return m_cameraPosition; }
 	unsigned char GetBlock(unsigned int x, unsigned int y) const { return m_blockMap[y][x]; }
 	CEntity *GetEntity(unsigned int entityIndex) const { return m_entities[entityIndex]; }
 	void GetEntities(unsigned int x, unsigned int y, std::vector<unsigned int> &entityIndices) { auto range = m_entityLocations.equal_range((y << 8) | x); for_each(range.first, range.second, [&entityIndices](std::unordered_multimap<unsigned int, unsigned int>::value_type &value) { entityIndices.push_back(value.second); }); }
@@ -57,6 +58,7 @@ private:
 	std::vector<CThing *> m_things;
 	glm::vec3 m_playerPosition{0.0f};
 	float m_playerAngle{0.0f};
+	glm::vec3 m_cameraPosition{0.0f};
 	unsigned char m_blockMap[32][32]{0};
 	std::unordered_map<unsigned int, Event> m_events;
 	bspmap_t *m_map{nullptr};

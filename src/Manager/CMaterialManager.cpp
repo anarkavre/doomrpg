@@ -23,7 +23,7 @@ std::shared_ptr<CMaterial> CMaterialManager::AcquireMaterial(unsigned int id, co
 
 	unsigned int handle = m_materialPool.Add(std::weak_ptr<CMaterial>());
 
-	material = std::shared_ptr<CMaterial>(std::make_shared<CMaterial>(m_game, handle, id, name));
+	material = std::make_shared<CMaterial>(m_game, handle, id, name);
 
 	m_materialPool.Set(handle, material);
 
@@ -35,7 +35,8 @@ std::shared_ptr<CMaterial> CMaterialManager::GetMaterial(unsigned int id, const 
 	if (!m_initialized || m_materialPool.IsEmpty())
 		return nullptr;
 
-	for (auto it = m_materialPool.GetPool().cbegin(); it != m_materialPool.GetPool().cend(); ++it) {
+	for (auto it = m_materialPool.GetPool().cbegin(); it != m_materialPool.GetPool().cend(); ++it)
+	{
 		if (!((*it).expired()))
 		{
 			std::shared_ptr<CMaterial> material = (*it).lock();

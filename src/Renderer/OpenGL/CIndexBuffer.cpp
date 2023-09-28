@@ -11,6 +11,8 @@ bool CIndexBuffer::Initialize(IRenderer *renderer, const void *data, unsigned in
 	if (!m_initialized && renderer != nullptr)
 	{
 		m_renderer = renderer;
+		m_size = size;
+		m_dynamic = dynamic;
 
 		m_renderer->CreateIndexBuffer(data, size, dynamic, m_handle);
 

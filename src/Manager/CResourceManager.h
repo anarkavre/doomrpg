@@ -48,7 +48,7 @@ std::shared_ptr<T> CResourceManager::AcquireResource(const std::string &name)
 
 	try
 	{
-		resource = std::shared_ptr<T>(std::make_shared<T>(m_game, handle, name));
+		resource = std::make_shared<T>(m_game, handle, name);
 
 		m_resourcePool.Set(handle, resource);
 	}
